@@ -1,0 +1,64 @@
+name: Build apps
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter build windows --release
+      - name: Zip Windows build
+        shell: pwsh
+        run: Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath ComicReader-windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ComicReader-windows
+          path: ComicReader-windows.zip
+      - name: Attach to GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ComicReader-windows.zip
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate Android platform folder (not in repo)
+        run: |
+          flutter create . --platforms=android --project-name=comic_reader --org=com.example
+          mkdir -p android/app/src/main/kotlin/com/example/comic_reader
+          { echo "package com.example.comic_reader"; echo; cat platform_snippets/MainActivity_device_info.kt; } \
+            > android/app/src/main/kotlin/com/example/comic_reader/MainActivity.kt
+      - run: flutter pub get
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ComicReader-android
+          path: build/app/outputs/flutter-apk/app-release.apk
+      - name: Attach to GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/flutter-apk/app-release.apk

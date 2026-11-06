@@ -1,0 +1,46 @@
+name: comic_reader
+description: Local-first premium comic and manga reader for Windows and Android.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.10.0 <4.0.0"
+  flutter: ">=3.29.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: any
+  ffi: any
+  path: any
+  path_provider: any
+  logging: any
+  drift: ^2.35.0
+  drift_flutter: ^0.3.0
+  file_picker: ^13.3.2
+  archive: ^4.6.0
+  # 2.4.5 includes the nullable PdfFileCache access fix and supports Dart 3.10+.
+  # Keep exact: newer 2.5+ releases raise Flutter requirements.
+  pdfrx: 2.4.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: any
+  drift_dev: ^2.35.0
+  build_runner: ^2.15.0
+  sqlite3: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
