@@ -1,0 +1,13 @@
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+.idea/
+local.properties
+*.bak
+windows/flutter/ephemeral/
+android/local.properties
+android/.gradle/
+*.zip
+test_output.txt

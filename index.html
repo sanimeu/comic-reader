@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comic Reader – local-first comic &amp; manga reader</title>
+<meta name="description" content="A premium dark, local-first comic and manga reader for Windows and Android. CBZ, ZIP and PDF.">
+<style>
+  :root{--bg:#0d0e14;--card:#161824;--text:#eceef6;--muted:#9aa0b8;--accent:#8b7cff;--line:#262a3d}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(1000px 500px at 70% -10%,#2a2352 0,transparent 60%),var(--bg);color:var(--text);line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  header{padding:22px 0;display:flex;justify-content:space-between;align-items:center}
+  .logo{font-weight:700;letter-spacing:.3px}
+  a{color:var(--accent);text-decoration:none}
+  .hero{padding:64px 0 40px;text-align:center}
+  h1{font-size:clamp(2rem,5vw,3.4rem);margin:0 0 14px;line-height:1.15}
+  .sub{color:var(--muted);max-width:620px;margin:0 auto 30px;font-size:1.1rem}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{padding:13px 24px;border-radius:12px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--text)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#0d0e14}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;padding:30px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .card h3{margin:0 0 6px;font-size:1.05rem}
+  .card p{margin:0;color:var(--muted);font-size:.95rem}
+  h2{margin:40px 0 4px}
+  .note{color:var(--muted);font-size:.9rem;padding:20px 0 50px}
+  footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:.9rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">📚 Comic Reader</div>
+    <a id="repoLink" href="#">GitHub</a>
+  </header>
+
+  <section class="hero">
+    <h1>Your comics. Your device.<br>No cloud required.</h1>
+    <p class="sub">A premium dark, local-first comic and manga reader for Windows and Android, with a smooth reader and a Drift-backed library.</p>
+    <div class="btns">
+      <a class="btn primary" id="dlWin" href="#">⬇ Download for Windows</a>
+      <a class="btn" id="dlAndroid" href="#">⬇ Download for Android (APK)</a>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card"><h3>CBZ, ZIP &amp; PDF</h3><p>Import chapters with natural page ordering. PDFs open in a PDFium-powered viewer.</p></div>
+    <div class="card"><h3>Flexible reader</h3><p>Page mode or continuous scroll, rotation, fit-screen or fit-width, zoom and keyboard navigation.</p></div>
+    <div class="card"><h3>Remembers where you stopped</h3><p>Page and scroll position are restored, with history, favourites and reading stats.</p></div>
+    <div class="card"><h3>Local-first</h3><p>Your library lives in a local SQLite database on your device.</p></div>
+  </section>
+
+  <p class="note">CBR and CB7 formats are not supported yet. On Windows, extract the ZIP and run the .exe inside. On Android, allow installing from unknown sources to sideload the APK.</p>
+</div>
+<footer>Comic Reader · built with Flutter</footer>
+
+<script>
+  // Derive the GitHub repo from the Pages URL: https://<user>.github.io/<repo>/
+  (function () {
+    var host = location.hostname, parts = location.pathname.split('/').filter(Boolean);
+    var user = host.split('.')[0], repo = parts[0] || '';
+    var base = (host.endsWith('github.io') && repo) ? 'https://github.com/' + user + '/' + repo : '#';
+    var rel = base + '/releases/latest';
+    document.getElementById('repoLink').href = base;
+    document.getElementById('dlWin').href = base === '#' ? '#' : base + '/releases/latest/download/ComicReader-windows.zip';
+    document.getElementById('dlAndroid').href = base === '#' ? '#' : base + '/releases/latest/download/app-release.apk';
+    if (base === '#') {
+      ['dlWin','dlAndroid'].forEach(function(id){ document.getElementById(id).title = 'Set your repo URL in site/index.html'; });
+    }
+  })();
+</script>
+</body>
+</html>
